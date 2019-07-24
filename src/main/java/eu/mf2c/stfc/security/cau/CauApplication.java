@@ -77,10 +77,10 @@ public class CauApplication implements ApplicationRunner {
 		if(!cloudca.isEmpty()) {
 			CauProperties.cloudCA = cloudca;
 		}
-		if(!"cloudcimi".isEmpty()) {
+		if(!cloudcimi.isEmpty()) {
 			CauProperties.CIMIAPI = cloudcimi;
 			//debug
-			System.out.println("Sent cloudcimi to: " + cloudcimi);
+			System.out.println("Set cloudcimi to: " + cloudcimi);
 		}
 		
 		

@@ -64,12 +64,13 @@ public class CauRestService {
 	@GetMapping(value = CauProperties.PUBKEY, produces = MediaType.TEXT_PLAIN_VALUE)
     public String publickey(@RequestParam(value="deviceid", defaultValue="0") String did) {
 		log.debug("get publickey method called ....");
+		System.out.println("get publickey method called ....");
 		/*<ip:port>/cau/publickey?deviceid=http://localhost:8080/cau/publickey
 		 * ?deviceid=0f848d8fb78cbe5615507ef5a198f660ac89a3ae03b95e79d4ebfb3466c20d54e9a5d9b9c41f88c782d1f67b32231d31b4fada8d2f9dd31a4d884681b784ec5a 
 		 */
 		//no param case is handled by Spring, it returns a 400
 		if(did.equals("0")) {
-			log.error("default device id recived....");
+			log.error("default device id received....");
 			System.out.println("default device id recived....");
 			return HttpStatus.BAD_REQUEST.name() + " : no device id value";
 		}			
@@ -86,7 +87,7 @@ public class CauRestService {
 			
 		} catch(Exception ce) {//in prod code, catch not found exception{
 			if(ce.getMessage().contains("Public key not found")) {
-				return HttpStatus.NOT_FOUND.toString() + did + " not found";
+				return HttpStatus.NOT_FOUND.toString() + " " + did + " not found";
 			}else {
 				return HttpStatus.INTERNAL_SERVER_ERROR.toString() + " : " + ce.getMessage();
 			}

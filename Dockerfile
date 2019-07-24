@@ -30,9 +30,9 @@ RUN mkdir -p "/var/app"
 ##for credentials
 RUN mkdir -p "/pkidata/cau"
 
-##copies files
+##copies p12 and jks files
 ADD ./credentials /pkidata/cau/
-ADD cau.jar /var/app/cau.jar
+ADD mf2c-cau.jar /var/app/cau.jar
 WORKDIR /var/app
 # 
 EXPOSE 55443

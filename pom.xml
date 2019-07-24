@@ -120,11 +120,17 @@
 	</dependencies>
 
 	<build>
+		<finalName>mf2c-cau</finalName>
+		<outputDirectory>${project.build.directory}/myclasses</outputDirectory>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+				<configuration>
+		            <outputDirectory>${project.basedir}</outputDirectory>
+		        </configuration>
 			</plugin>
+			
 		</plugins>
 		<!-- tell maven to filter file on packaging, we provide an external one 
 			in production <resources> <resource> <directory>src/main/resources</directory> 

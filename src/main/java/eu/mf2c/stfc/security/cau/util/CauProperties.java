@@ -28,7 +28,7 @@ public class CauProperties {
 	
 	///////////////default locations of other mF2C components///////
 	/** IP of the Cloud CAU */
-	public static String cloudCAUIP = "";
+	public static String cloudCAUIP = ""; //built-in and controlled by distro??
 	/** IP of the Cloud CIMI */
 	public static String cloudCIMI = "";
 	/** IP of the Cloud CA */
