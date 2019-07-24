@@ -1,4 +1,4 @@
-# Control Area Unit (CAU) (TO BE COMPLETED)
+# Control Area Unit (CAU)
 
 ## Description
 
@@ -50,7 +50,7 @@ Here is an example of the post request data:
 
 The library is packaged with a self-contained fat jar with all depended libraries.  The jar is located in the target folder and the javadoc in the target\site\apidocs folder.  You can use Maven to build a fat jar with all dependencies using:
 
-		clean install javadoc:javadoc -Dmaven.test.skip=true
+		package
 
 It is recommended that you select the skip test option as the tests may not run correctly in your own environment. 
 
@@ -64,10 +64,9 @@ which will include
 
 ## Running
 
-You can run the library from the command line
+You can run the library from the command line, the two arguments are optional
 
-	java -jar ....
-
+	java -jar mf2c-cau.jar <cloudca=https://213.205.14.13:54443/certauths/rest> <cloudcimi=https://dummy:8201/api>
 
 
 ## Contributors

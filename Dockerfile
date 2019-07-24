@@ -32,7 +32,7 @@ RUN mkdir -p "/pkidata/cau"
 
 ##copies p12 and jks files
 ADD ./credentials /pkidata/cau/
-ADD mf2c-cau.jar /var/app/cau.jar
+ADD ./cau-stfc/mf2c-cau.jar /var/app/cau.jar
 WORKDIR /var/app
 # 
 EXPOSE 55443
