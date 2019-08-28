@@ -49,7 +49,7 @@ public class Utils {
      * 			on error	
      */
     public static Map<String, String> getValues(String message) throws CauException {
-    	//request msg params : csr=,deviceID=,detectedLID=,detectedLIP=,IDKey=,type=
+    	//request msg params : csr=,deviceID=,detectedLID=
     	//log.debug("about to getValues from : " + message);
     	log.log(Level.ALL,"about to getValues from : " + message);
     	//System.out.println("about to getValues from : " + message);

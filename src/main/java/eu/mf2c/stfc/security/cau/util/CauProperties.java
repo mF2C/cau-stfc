@@ -30,7 +30,7 @@ public class CauProperties {
 	/** IP of the Cloud CAU */
 	public static String cloudCAUIP = ""; //built-in and controlled by distro??
 	/** IP of the Cloud CIMI */
-	public static String cloudCIMI = "";
+	public static String cloudCIMI = "https://dashboard.mf2c-project.eu/api/";
 	/** IP of the Cloud CA */
 	public static String cloudCA = "https://213.205.14.13:54443/certauths/rest";	
 	
@@ -39,12 +39,12 @@ public class CauProperties {
 	
 	
 	//////////////CIMI resource path///////////////////////
-	/** base entry point **/
+	/** base entry point *
 	public static String CIMIAPI = "/api";	
-	/** resource for registering a user */
+	/** resource for registering a user 
 	public static final String USER = "/user";
-	/** resource for querying an IdKey */
-	public static final String IDKEY = "/idkey"; //:TODO need to swap it for the correct one!!!
+	/** resource for querying an IdKey
+	public static final String IDKEY = "/idkey"; //:TODO need to swap it for the correct one!!! */
 	
 	//////////////cau rest service endpoints //////////////
 	/** root context of the application */

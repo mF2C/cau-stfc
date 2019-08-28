@@ -41,8 +41,8 @@ public class CertificateHandler {
 	PubkeyRepo pubkeyRepo;*/
 	/** Spring boot message logger */
 	private static final Logger log = LoggerFactory.getLogger(CertificateHandler.class);
-	/** user idKey attribute */
-	private String idKey;
+	/** user idKey attribute 
+	private String idKey;*/
 	/** agent device id attribute */
 	private String deviceID;
 	/** leader agent device id attribute */
@@ -55,14 +55,12 @@ public class CertificateHandler {
 	private String csr;
 	
 	/*
+     * Handle certificate requests
 	 * 1. parse the request from CAU-client, check agent type: full v micro; child v leader
-	 * request msg params : csr=,deviceID=,detectedLID=,detectedLIP=,IDKey=,type=
-	 * 2. call cloud cimi/dc to validate idKey (for full agent)
-	 * 3. post csr to CA
-	 * 4. (19Jun19 not required!)register cimi user for the agent in the Leader CIMI instance (cau-client 
-	 * 	  registers the leader in local CIMI (for full agent)
-	 * 5. save device id and public key to repo
-	 * 6. return cert to CAU-client
+	 * request msg params : csr=,deviceID=,detectedLID=
+	 * 2. post csr to CA
+	 * 3. save device id and public key to repo
+	 * 4. return cert to CAU-client
 	 */		
 	/**
 	 * Construct an instance
@@ -71,15 +69,15 @@ public class CertificateHandler {
 	 * @throws IllegalArgumentException if any requisite parameters are missing
 	 */
 	public CertificateHandler(Map<String,String> params) throws IllegalArgumentException {
-		//	csr=,deviceID=,detectedLID=,detectedLIP=,IDKey=,type=
-		this.idKey = params.get("IDKey");
+		//	csr=,deviceID=,detectedLID=
+		//this.idKey = params.get("IDKey"); //IDENT now do the validation. We don't need this anymore
 		this.deviceID = params.get("deviceID");
 		this.leaderID = params.get("detectedLID");
 		//this.leaderIP = params.get("detectedLIP"); //actually not critical if no CIMI user matching
 		this.csr = params.get("csr");
 		//this.agentTyp = params.get("type");
-		//26June19 given the latest change, we really only need idKey, deviceId and csr for minimum operation
-		if(this.idKey == null || this.deviceID == null || this.leaderID == null /*
+		//23Aug19 given the latest change, we really only need deviceId and csr for minimum operation
+		if(/*this.idKey == null || */this.deviceID == null || this.leaderID == null /*
 				|| this.leaderIP == null || this.agentTyp == null*/ || this.csr == null ) {
 			throw new IllegalArgumentException("missing input params!");
 		}
@@ -89,7 +87,7 @@ public class CertificateHandler {
 	 * <p>
 	 * @return true if valiated, else false
 	 * @throws CAUException 	on error
-	 */
+	THIS IS NO LONGER REQUIRED 23Aug2019
 	public boolean validate() throws CauException {
 		//Step2
 		//:TODO not sure what this method is yet as CIMI hasn't got the value yet
@@ -104,7 +102,7 @@ public class CertificateHandler {
 		}
 		
 		return res;
-	}
+	} */
 	/**
 	 * Post CSR to CA to request an X.509 certificate.
 	 * <p>
@@ -133,8 +131,8 @@ public class CertificateHandler {
 		}else {
 			log.info("agent(" + this.deviceID + ") is a micro agent, skipping validate idKey step!");
 		}*/
-		//according the Cris, we validate both full and micro agent's idKey against the cloud CIMI
-		validate(); //step 2
+		//No longer required IDENT now validates the username/pswd
+		//validate(); //step 2
 		//
 		String pem = getCertificate(); //step 3
 		/* 19June19 SixQ has not implemented user matching in their code during session creation,

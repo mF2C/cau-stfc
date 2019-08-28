@@ -71,17 +71,17 @@ public class CauApplication implements ApplicationRunner {
 		for (String name : appArgs.getOptionNames()) {
 	         if (name.equals("cloudca"))
 	            cloudca = appArgs.getOptionValues(name).get(0);
-	         if (name.equals("cloudcimi"))
-	        	 cloudcimi = appArgs.getOptionValues(name).get(0);
+	         /*if (name.equals("cloudcimi"))
+	        	 cloudcimi = appArgs.getOptionValues(name).get(0);*/
 	    }
 		if(!cloudca.isEmpty()) {
 			CauProperties.cloudCA = cloudca;
 		}
-		if(!cloudcimi.isEmpty()) {
+		/*if(!cloudcimi.isEmpty()) {
 			CauProperties.CIMIAPI = cloudcimi;
 			//debug
 			System.out.println("Set cloudcimi to: " + cloudcimi);
-		}
+		}*/
 		
 		
 	}

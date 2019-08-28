@@ -75,10 +75,7 @@ public class CauRestService {
 			return HttpStatus.BAD_REQUEST.name() + " : no device id value";
 		}			
 		try {
-			//test, just return a default one for now
-			//PubKeyDAO dao = new PubKeyDAO();
-			//return dao.getPublicKey(did);
-			///////////test
+			//
 			Pubkey pubkey = pubkeyRepo.findByDeviceId(did);//use the interface to findBy
 			if(pubkey == null) {
 				throw new CauException("Public key not found");
@@ -97,7 +94,6 @@ public class CauRestService {
 	 * REST service to handle post requests from CAU&#45;Clients to register an Agent.  The registration 
 	 * process involves&#58;
 	 * <ul>
-	 * <li>validating the ID Key associated with the Agent with the cloud CIMI instance</li> 
 	 * <li>forward the Certificate Signing Request to the Cloud CA to get a X.509 certificate back</li>
 	 * <li>storing the {@link java.lang.String <em>String</em>} representation of the RSA public key
 	 * 		against the Agent&#39;s unique device id.</li>
@@ -110,7 +106,6 @@ public class CauRestService {
 	 * 				<ul>
 	 * 				<li>deviceID &#58; the Agent&#39;s unique device id</li>
 	 * 				<li>detectedLID &#58; the detected leader#39;s device id</li>
-	 * 				<li>IDKey &#58; IDKey associated with the human user who owns the Agent</li>
 	 * 				<li>csr &#58; a {@link java.lang.String <em>String</em>} representation of the Certificate Signing Request</li>
 	 * 				</ul>
 	 * @return	a {@link java.lang.String <em>String</em>} representation of the X.509 Certificate
@@ -124,19 +119,16 @@ public class CauRestService {
 		try {
 			/*
 			 * 1. parse the request from CAU-client, 
-			 * request msg params : csr=,deviceID=,detectedLID=,detectedLIP=,IDKey=,type=
-			 * 2. call cloud cimi/dc to validate idKey (for all agent)
-			 * 3. post csr to CA
-			 * 4. (Apparently SixQ has not implemented user matching, so no need to register user)register cimi user for the agent in the Leader CIMI instance (cau-client 
-			 * 	  registers the leader in local CIMI (for full agent)
-			 * 5. save device id and public key to repo
-			 * 6. return cert to CAU-client
+			 * request msg params : csr=,deviceID=,detectedLID=
+			 * 2. post csr to CA
+			 * 3. save device id and public key to repo
+			 * 4. return cert to CAU-client
 			 */
 			log.debug("request:\n" + request);
 			System.out.println("request\n" + request);
 			CertificateHandler ch = new CertificateHandler(Utils.getValues(request)); //step 1
 			//if missing params, ch throws 'missing input params!' exception
-			pem = ch.handle(pubkeyRepo);		
+			pem = ch.handle(pubkeyRepo); //steps 2 and 3		
 			//
 		} catch (CauException e) {
 			log.error("Error handling post message: " + e.getMessage());
@@ -145,6 +137,6 @@ public class CauRestService {
 			log.error("Error handling post message: " + e.getMessage());
 			return HttpStatus.BAD_REQUEST.toString() + " : " + e.getMessage();
 		} 		
-		return pem; //step 5
+		return pem; //step 4
 	}	
 }

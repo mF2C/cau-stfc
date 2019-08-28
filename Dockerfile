@@ -21,9 +21,8 @@ LABEL author="Shirley Crompton" \
       eu.mf2c-project.version="0.0.1-beta" \
       eu.mf2c-project.version.is-production="false" 
 #
-# Cloud CA and CIMI service endpoints
-ENV CLOUDCA="https://213.205.14.13:54443/certauths/rest"
-ENV CLOUDCIMI="http://dummy:8201/api"
+# Cloud CA
+ENV TRUSTCA="https://213.205.14.13:54443/certauths/rest"
 
 ##creates folders
 RUN mkdir -p "/var/app"
@@ -37,6 +36,5 @@ WORKDIR /var/app
 # 
 EXPOSE 55443
 #run the application
-#CMD [ "java", "-jar", "cau.jar", ${CLOUDCA} ]
-CMD exec java -jar cau.jar --cloudca=${CLOUDCA} --cloudcimi=${CLOUDCIMI}
+CMD exec java -jar cau.jar --cloudca=${TRUSTCA}
 
