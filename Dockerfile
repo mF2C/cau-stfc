@@ -18,23 +18,39 @@ FROM openjdk:8-jdk-alpine
 #
 LABEL author="Shirley Crompton" \
       vendor="UK RI STFC" \
-      eu.mf2c-project.version="0.0.1-beta" \
+      eu.mf2c-project.version="1.1" \
       eu.mf2c-project.version.is-production="false" 
 #
 # Cloud CA
-ENV TRUSTCA="https://213.205.14.13:54443/certauths/rest"
+
+##installs required tools
+RUN apk add --no-cache bash 
+RUN apk add --update openssl && rm -rf /var/cache/apk/*
+RUN apk add --update curl && rm -rf /var/cache/apk/*
+
+##set env variable
+ENV TRUSTCA="https://213.205.14.13:54443/certauths/rest/it2trustedca"
 
 ##creates folders
 RUN mkdir -p "/var/app"
 ##for credentials
 RUN mkdir -p "/pkidata/cau"
 
-##copies p12 and jks files
-ADD ./credentials /pkidata/cau/
-ADD ./cau-stfc/mf2c-cau.jar /var/app/cau.jar
+##copies startup script and jar
+#ADD ./credentials /pkidata/cau/
+ADD ./src/main/resources/cau-startup.sh /root/cau-startup.sh
+RUN chmod +x /root/cau-startup.sh
+ADD ./mf2c-cau.jar /var/app/cau.jar
+
+
 WORKDIR /var/app
 # 
 EXPOSE 55443
 #run the application
-CMD exec java -jar cau.jar --cloudca=${TRUSTCA}
+#CMD exec java -jar cau.jar --cloudca=${TRUSTCA}
+##run the startup script
+#CMD ["bash", "/root/cau-startup.sh"] this is incorrect
+ENTRYPOINT ["/root/cau-startup.sh"]
+
+
 
