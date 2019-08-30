@@ -1,4 +1,4 @@
-#!/bin/bash 
+#!/bin/bash  
 # script to set up server certificate and java key and truststores
 # for the CAU server.
 # The script uses openssl and java keytool.
@@ -95,5 +95,5 @@ fi
 #launch the application
 cd /var/app/
 echo "Launching CAU server ....."
-"${JAVA_HOME}"/bin/java -jar cau.jar --cloudca="${caep} --caservice="${ca}"
+"${JAVA_HOME}"/bin/java -jar cau.jar --cloudca="${caep}" --caservice="${ca}"
 

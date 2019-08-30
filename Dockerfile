@@ -18,7 +18,7 @@ FROM openjdk:8-jdk-alpine
 #
 LABEL author="Shirley Crompton" \
       vendor="UK RI STFC" \
-      eu.mf2c-project.version="1.1" \
+      eu.mf2c-project.version="1.3" \
       eu.mf2c-project.version.is-production="false" 
 #
 # Cloud CA
@@ -48,6 +48,5 @@ WORKDIR /var/app
 EXPOSE 55443
 #run the installation script
 ENTRYPOINT ["/root/cau-startup.sh"]
-
 
 

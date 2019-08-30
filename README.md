@@ -87,7 +87,7 @@ relevant credentials (keystores, certificate and key files) manually.
 
  - Removed the IDKey parameter from the get Agent cert operation.  IDKey validation is now handled by the Identification block.
  
-### 1.2 (30/08/2019)
+### 1.3 (30/08/2019)
 
 #### Changed
 
