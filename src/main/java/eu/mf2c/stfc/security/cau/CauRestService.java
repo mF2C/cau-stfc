@@ -63,7 +63,7 @@ public class CauRestService {
 	 */
 	@GetMapping(value = CauProperties.PUBKEY, produces = MediaType.TEXT_PLAIN_VALUE)
     public String publickey(@RequestParam(value="deviceid", defaultValue="0") String did) {
-		log.debug("get publickey method called ....");
+		log.debug("get publickey method called for deviceid:\n" + did);
 		System.out.println("get publickey method called ....");
 		/*<ip:port>/cau/publickey?deviceid=http://localhost:8080/cau/publickey
 		 * ?deviceid=0f848d8fb78cbe5615507ef5a198f660ac89a3ae03b95e79d4ebfb3466c20d54e9a5d9b9c41f88c782d1f67b32231d31b4fada8d2f9dd31a4d884681b784ec5a 

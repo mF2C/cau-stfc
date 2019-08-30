@@ -18,7 +18,6 @@ package eu.mf2c.stfc.security.cau;
 import org.apache.geode.cache.client.ClientRegionShortcut;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.SpringApplication;
@@ -28,7 +27,6 @@ import org.springframework.data.gemfire.config.annotation.EnableEntityDefinedReg
 import org.springframework.data.gemfire.repository.config.EnableGemfireRepositories;
 
 import eu.mf2c.stfc.security.cau.model.Pubkey;
-import eu.mf2c.stfc.security.cau.model.PubkeyRepo;
 import eu.mf2c.stfc.security.cau.util.CauProperties;
 /**
  * Entry point to the mF2C CAU application.
@@ -66,22 +64,22 @@ public class CauApplication implements ApplicationRunner {
 	public void run(ApplicationArguments appArgs) {		
 		//initialise application, e.g. set up data access etc.
 		String cloudca = "";
-		String cloudcimi = "";
+		String caservice = "";
 		
 		for (String name : appArgs.getOptionNames()) {
 	         if (name.equals("cloudca"))
 	            cloudca = appArgs.getOptionValues(name).get(0);
-	         /*if (name.equals("cloudcimi"))
-	        	 cloudcimi = appArgs.getOptionValues(name).get(0);*/
+	         if (name.equals("caservice"))
+	        	 caservice = appArgs.getOptionValues(name).get(0);
 	    }
 		if(!cloudca.isEmpty()) {
 			CauProperties.cloudCA = cloudca;
 		}
-		/*if(!cloudcimi.isEmpty()) {
-			CauProperties.CIMIAPI = cloudcimi;
+		if(!caservice.isEmpty()) {
+			CauProperties.CA = caservice;
 			//debug
-			System.out.println("Set cloudcimi to: " + cloudcimi);
-		}*/
+			System.out.println("Set caservice to: " + caservice);
+		}
 		
 		
 	}

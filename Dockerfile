@@ -29,11 +29,12 @@ RUN apk add --update openssl && rm -rf /var/cache/apk/*
 RUN apk add --update curl && rm -rf /var/cache/apk/*
 
 ##set env variable
-ENV TRUSTCA="https://213.205.14.13:54443/certauths/rest/it2trustedca"
+ENV CAEP="https://213.205.14.13:54443/certauths/rest/"
+ENV CA="it2untrustedca"
 
 ##creates folders
 RUN mkdir -p "/var/app"
-##for credentials
+##for credentials, this folder is NOT a mapped volume
 RUN mkdir -p "/pkidata/cau"
 
 ##copies startup script and jar
@@ -41,15 +42,11 @@ RUN mkdir -p "/pkidata/cau"
 ADD ./src/main/resources/cau-startup.sh /root/cau-startup.sh
 RUN chmod +x /root/cau-startup.sh
 ADD ./mf2c-cau.jar /var/app/cau.jar
-
-
+##set working directory
 WORKDIR /var/app
 # 
 EXPOSE 55443
-#run the application
-#CMD exec java -jar cau.jar --cloudca=${TRUSTCA}
-##run the startup script
-#CMD ["bash", "/root/cau-startup.sh"] this is incorrect
+#run the installation script
 ENTRYPOINT ["/root/cau-startup.sh"]
 
 

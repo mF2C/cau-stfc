@@ -87,8 +87,8 @@ public class CAClient {
 		CloseableHttpClient client = null;
 		// prepare the post
 		// HttpPost post = new
-		// HttpPost("https://213.205.14.13:54443/certauths/rest/it2trustedca");
-		HttpPost post = new HttpPost(CauProperties.cloudCA + CauProperties.UTCA);
+		// HttpPost("https://213.205.14.13:54443/certauths/rest/it2untrustedca");
+		HttpPost post = new HttpPost(CauProperties.cloudCA + CauProperties.CA);
 		//
 		String cert = "";
 		StringEntity str;

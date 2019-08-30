@@ -29,14 +29,14 @@ public class CauProperties {
 	///////////////default locations of other mF2C components///////
 	/** IP of the Cloud CAU */
 	public static String cloudCAUIP = ""; //built-in and controlled by distro??
-	/** IP of the Cloud CIMI */
-	public static String cloudCIMI = "https://dashboard.mf2c-project.eu/api/";
+	/** IP of the Cloud CIMI 
+	public static String cloudCIMI = "https://dashboard.mf2c-project.eu/api/";*/
 	/** IP of the Cloud CA */
-	public static String cloudCA = "https://213.205.14.13:54443/certauths/rest";	
+	public static String cloudCA = "https://213.205.14.13:54443/certauths/rest/";	
 	
-	//////////////CA resource path/////////////////////////
-	public static final String UTCA = "/it2untrustedca";
-	
+	//////////////default CA resource path/////////////////////////
+	/** default CA service path element */
+	public static String CA = "it2untrustedca";		
 	
 	//////////////CIMI resource path///////////////////////
 	/** base entry point *

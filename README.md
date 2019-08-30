@@ -6,10 +6,10 @@ This application provides a loosely coupled identity management service to mF2C 
 a unique 128 char length device id by the Cloud Registration service.  This id uniquely identifies each mF2C agent.
 The CAU stores this device id alongside the Agent's RSA public key to help an Agent attest its mF2C identity 
 via signed JSON Web Tokens, and to protect mF2C communication through non-repudiation and the encryption of confidential 
-messages (see the AC-Lib for more information).  Each Agent has a built-in CAU-client (see Cau-Client) which acts as a 
-gateway to the loosely-coupled CAU middleware.
+messages (see the AC-Lib for more information).  Each Agent has a built-in [CAU-client](https://github.com/mF2C/cau-client.git) 
+which acts as a gateway to the loosely-coupled CAU middleware.
 
-The CAU is a Spring boot REST application which offers two key functions:
+The CAU application uses the Spring boot REST framework which offers two key functions:
 
 *get public key* - this retrieves the RSA public key mapped to the an Agent's device id.  
 
@@ -39,7 +39,7 @@ We are using the -k switch to prevent hostname verification.
 
 `curl -X POST -vk --data-binary @post.txt https://213.205.14.13:55443/cau/cert -H "Content-Type: text/plain" -H "Accept: text/plain"`
 
-Here is an example of the post request data:
+Here is an example of the post request data to the CAU:
 
 `csr:{CSRString},deviceID:{deviceIDString},detectedLID:{detectedLIDString}`
 
@@ -47,27 +47,33 @@ Here is an example of the post request data:
 
 ##Building the Java library
 
-The library is packaged with a self-contained fat jar with all depended libraries.  The jar is located in the target folder and the javadoc in the target\site\apidocs folder.  You can use Maven to build a fat jar with all dependencies using:
+The library is packaged with a self-contained fat jar with all depended libraries.  The jar is located in the target folder and the javadoc in the target\site\apidocs folder.
+You can use Maven to build a fat jar with all dependencies using the Maven goal:
 
 		package
 
 It is recommended that you select the skip test option as the tests may not run correctly in your own environment. 
 
 
-##Building the Docker container
+## Building and Running the Docker container
 
 This project provides a self-contained fat jar with all depended libraries, including an embedded Tomcat server.
 The installation shell script (cau-startup.sh) runs on the container startup stage.  The script performs these steps:
 
-   server runs with an mF2C certificate issued by the mF2C it2trusted CA.  In the current version, this certificate
-needs to be provided as part of the docker container build.  We intend to add a shell script to bootstrap the application
-which will include 
+ - gets the certificates of the trusted and untrusted (or fog) CAs to use as trust anchors
+ - gets a certificate from the trusted CA to use as the CAU server certificate
+ - generates a p12 keystore for the embedded Tomcat server using the server certificate obtained in the previous step
+ - generates a trust store in JKS format for SSL communication.  The trust store contains the trust anchors obtained above
+ - generates a key store in JKS format for SSL communication.  The key store contains the private key and trust anchor
+   associated with the server p12 certificate
+ - launch the CAU java application
+ 
+## Running as A Standalone Application
 
-## Running
+You can also run the library from the command line (see example below), the two arguments are mandatory.  You need to provide the 
+relevant credentials (keystores, certificate and key files) manually.
 
-You can run the library from the command line, the two arguments are optional
-
-	java -jar mf2c-cau.jar <cloudca=https://213.205.14.13:54443/certauths/rest> <cloudcimi=https://dummy:8201/api>
+	java -jar mf2c-cau.jar <cloudca=https://213.205.14.13:54443/certauths/rest/> <caservice=it2untrustedca>
 
 ## CHANGELOG
 
@@ -80,6 +86,12 @@ You can run the library from the command line, the two arguments are optional
 #### Changed
 
  - Removed the IDKey parameter from the get Agent cert operation.  IDKey validation is now handled by the Identification block.
+ 
+### 1.2 (30/08/2019)
+
+#### Changed
+
+ - Fixed a bug in the startup shell script, aligned code to work with the application arguments and updated README.md and Dockerfile.
 
 ## Contributors
 
