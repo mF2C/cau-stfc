@@ -18,7 +18,7 @@ FROM openjdk:8-jdk-alpine
 #
 LABEL author="Shirley Crompton" \
       vendor="UK RI STFC" \
-      eu.mf2c-project.version="1.3" \
+      eu.mf2c-project.version="1.4" \
       eu.mf2c-project.version.is-production="false" 
 #
 # Cloud CA

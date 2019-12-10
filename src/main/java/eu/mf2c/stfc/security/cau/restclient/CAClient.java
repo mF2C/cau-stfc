@@ -33,6 +33,7 @@ import org.apache.http.HttpHeaders;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.conn.ssl.NoopHostnameVerifier;
+import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
@@ -89,6 +90,7 @@ public class CAClient {
 		// HttpPost post = new
 		// HttpPost("https://213.205.14.13:54443/certauths/rest/it2untrustedca");
 		HttpPost post = new HttpPost(CauProperties.cloudCA + CauProperties.CA);
+		System.out.println("cau: CAClient posting to CA(IP: " + CauProperties.cloudCA + CauProperties.CA + ")" );
 		//
 		String cert = "";
 		StringEntity str;
@@ -212,12 +214,25 @@ public class CAClient {
 					.loadKeyMaterial(CredentialUtils.loadKeyStore(CauProperties.STORE_PATH, "serverStore"),
 							"serverStore".toCharArray())
 					.build();
-			log.debug("about to build http client ...");
+			log.debug("about to build http client using TLSv1.2 protocol...");
+			/*******************6Dec2019 fix
 			// turn off hostname verification
 			httpClient = HttpClients.custom().setSSLHostnameVerifier(NoopHostnameVerifier.INSTANCE)
 					.setSSLContext(sslContext). // set context and trust all cert
 					setDefaultHeaders(getHeadersAsList()). // set headers
-					build();
+					build();*/
+			// force the use of TLS1.2
+			SSLConnectionSocketFactory sslsf = new SSLConnectionSocketFactory(
+	                sslContext,
+	                new String[] { "TLSv1.2" }, //protocols
+	                null, //ciphers
+	                NoopHostnameVerifier.INSTANCE);
+			// turn off hostname verification
+			httpClient = HttpClients.custom()
+					.setSSLSocketFactory(sslsf) 
+					.setDefaultHeaders(getHeadersAsList()) // set headers
+					.build();
+			////////////end 5Dec2019 fix
 		} catch (Exception e) {
 			throw new CauException("Error getting http client : " + e.getMessage());
 		}
