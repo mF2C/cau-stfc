@@ -92,6 +92,13 @@ relevant credentials (keystores, certificate and key files) manually.
 #### Changed
 
  - Fixed a bug in the startup shell script, aligned code to work with the application arguments and updated README.md and Dockerfile.
+ 
+### 1.4 (12/12/2019)
+
+#### Changed
+ - Updated Apache Http client to use TLS v1.2.
+ - Updated docker file to include converting the startup shell script from DOS to UNIX 
+ 
 
 ## Contributors
 

@@ -41,6 +41,7 @@ RUN mkdir -p "/pkidata/cau"
 #ADD ./credentials /pkidata/cau/
 ADD ./src/main/resources/cau-startup.sh /root/cau-startup.sh
 RUN chmod +x /root/cau-startup.sh
+RUN dos2unix /root/cau-startup.sh
 ADD ./mf2c-cau.jar /var/app/cau.jar
 ##set working directory
 WORKDIR /var/app
