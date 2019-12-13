@@ -32,7 +32,7 @@ public class CauProperties {
 	/** IP of the Cloud CIMI 
 	public static String cloudCIMI = "https://dashboard.mf2c-project.eu/api/";*/
 	/** IP of the Cloud CA */
-	public static String cloudCA = "https://213.205.14.13:54443/certauths/rest/";	
+	public static String cloudCA = "https://213.205.14.20:54443/certauths/rest/";	
 	
 	//////////////default CA resource path/////////////////////////
 	/** default CA service path element */

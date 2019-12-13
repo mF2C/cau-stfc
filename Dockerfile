@@ -29,7 +29,7 @@ RUN apk add --update openssl && rm -rf /var/cache/apk/*
 RUN apk add --update curl && rm -rf /var/cache/apk/*
 
 ##set env variable
-ENV CAEP="https://213.205.14.13:54443/certauths/rest/"
+ENV CAEP="https://213.205.14.20:54443/certauths/rest/"
 ENV CA="it2untrustedca"
 
 ##creates folders

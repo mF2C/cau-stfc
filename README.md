@@ -98,6 +98,7 @@ relevant credentials (keystores, certificate and key files) manually.
 #### Changed
  - Updated Apache Http client to use TLS v1.2.
  - Updated docker file to include converting the startup shell script from DOS to UNIX 
+ - Updated default CA endpoint to 213.205.14.20:54443
  
 
 ## Contributors

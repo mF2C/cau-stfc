@@ -24,6 +24,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.net.ssl.SSLContext;
@@ -90,7 +91,7 @@ public class CAClient {
 		// HttpPost post = new
 		// HttpPost("https://213.205.14.13:54443/certauths/rest/it2untrustedca");
 		HttpPost post = new HttpPost(CauProperties.cloudCA + CauProperties.CA);
-		System.out.println("cau: CAClient posting to CA(IP: " + CauProperties.cloudCA + CauProperties.CA + ")" );
+		System.out.println(new Date().toString() + ": cau: CAClient posting to CA(IP: " + CauProperties.cloudCA + CauProperties.CA + ")" );
 		//
 		String cert = "";
 		StringEntity str;
@@ -98,25 +99,25 @@ public class CAClient {
 		try {
 			client = getCloseableHttpClient();
 			//debug
-			System.out.println("about to post csr: " + this.csr);
+			System.out.println(new Date().toString() + ": about to post csr: " + this.csr);
 			str = new StringEntity(this.csr);
 			post.setEntity(str);
 			resp = client.execute(post);
 			log.debug(resp.getStatusLine().getReasonPhrase());
 			int status = resp.getStatusLine().getStatusCode();
 			long length = resp.getEntity().getContentLength();
-			System.out.println("RC " + status + " length: " + String.valueOf(length));
+			System.out.println(new Date().toString() + ": RC " + status + " length: " + String.valueOf(length));
 			log.debug("RC " + status + " length: " + String.valueOf(length));
 			
 			if (status >= 200 && status < 300) {
-				System.out.println("About to get content using EntityUtils...");
+				System.out.println(new Date().toString() + ": About to get content using EntityUtils...");
 				log.debug("About to get content using EntityUtils...");
 				if (length != -1 && length < 2048) {
 			        cert = EntityUtils.toString(resp.getEntity());
 					//System.out.println(cert);			        
 			    } else {
 			        // read in stream, but cert normally under 2k
-			    	System.out.println("About to get content as stream...");
+			    	System.out.println(new Date().toString() + ": About to get content as stream...");
 			    	log.debug("About to get content as stream...");
 			    	cert = getCertStr(resp.getEntity().getContent());
 			    }		

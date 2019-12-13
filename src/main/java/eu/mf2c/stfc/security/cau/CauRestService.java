@@ -16,6 +16,8 @@
 
 package eu.mf2c.stfc.security.cau;
 
+import java.util.Date;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -64,14 +66,14 @@ public class CauRestService {
 	@GetMapping(value = CauProperties.PUBKEY, produces = MediaType.TEXT_PLAIN_VALUE)
     public String publickey(@RequestParam(value="deviceid", defaultValue="0") String did) {
 		log.debug("get publickey method called for deviceid:\n" + did);
-		System.out.println("get publickey method called ....");
+		System.out.println(new Date().toString() + ": get publickey method called ....");
 		/*<ip:port>/cau/publickey?deviceid=http://localhost:8080/cau/publickey
 		 * ?deviceid=0f848d8fb78cbe5615507ef5a198f660ac89a3ae03b95e79d4ebfb3466c20d54e9a5d9b9c41f88c782d1f67b32231d31b4fada8d2f9dd31a4d884681b784ec5a 
 		 */
 		//no param case is handled by Spring, it returns a 400
 		if(did.equals("0")) {
 			log.error("default device id received....");
-			System.out.println("default device id recived....");
+			System.out.println(new Date().toString() + ": default device id recived....");
 			return HttpStatus.BAD_REQUEST.name() + " : no device id value";
 		}			
 		try {
@@ -114,7 +116,7 @@ public class CauRestService {
 	//@PostMapping(value = Properties.CERT)
 	public String cert(@RequestBody String request) {
 		log.debug("post cert method called ....");
-		System.out.println("post cert method called ....");
+		System.out.println(new Date().toString() + ": post cert method called ....");
 		String pem = "should have been a cert string";
 		try {
 			/*
@@ -125,7 +127,7 @@ public class CauRestService {
 			 * 4. return cert to CAU-client
 			 */
 			log.debug("request:\n" + request);
-			System.out.println("request\n" + request);
+			System.out.println(new Date().toString() + ": request\n" + request);
 			CertificateHandler ch = new CertificateHandler(Utils.getValues(request)); //step 1
 			//if missing params, ch throws 'missing input params!' exception
 			pem = ch.handle(pubkeyRepo); //steps 2 and 3		
